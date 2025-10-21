@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Registered Persons</h2>
+<table border="1">
+    <tr>
+        <th>Name</th><th>Roll No</th><th>Mobile</th><th>Branch</th><th>Section</th><th>Image</th>
+    </tr>
+    {% for p in persons %}
+    <tr>
+        <td>{{ p[1] }}</td>
+        <td>{{ p[2] }}</td>
+        <td>{{ p[3] }}</td>
+        <td>{{ p[4] }}</td>
+        <td>{{ p[5] }}</td>
+        <td>
+          {% if p[6] %}
+            <img src="{{ url_for('static', filename='uploads/' + p[6]) }}" width="80">
+          {% else %}
+            -
+          {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

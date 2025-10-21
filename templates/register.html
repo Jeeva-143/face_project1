@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Register New Person</h2>
+  <form method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Roll No</label>
+        <input type="text" name="rollno" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <label class="form-label">Mobile</label>
+        <input type="text" name="mobile" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Branch</label>
+        <input type="text" name="branch" class="form-control">
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <label class="form-label">Section</label>
+        <input type="text" name="section" class="form-control">
+      </div>
+    </div>
+
+    <hr>
+
+    <h5>Upload or Capture Multiple Images</h5>
+    <div class="mb-3">
+      <input type="file" id="fileInput" name="images" multiple class="form-control" accept="image/*">
+      <small class="form-text text-muted">You can select multiple files at once.</small>
+    </div>
+
+    <div class="mb-3">
+      <button type="button" class="btn btn-secondary" onclick="openCamera()">Open Camera</button>
+      <button type="button" class="btn btn-info" onclick="capturePhoto()">Capture Photo</button>
+      <video id="video" width="320" height="240" autoplay style="border:1px solid #ccc;"></video>
+      <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+    </div>
+
+    <div class="mb-3">
+      <h6>Captured Images:</h6>
+      <div id="previewArea" class="d-flex flex-wrap"></div>
+    </div>
+
+    <!-- Hidden field to send captured images as base64 -->
+    <input type="hidden" id="capturedImages" name="capturedImages">
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+
+<script>
+let video = document.getElementById("video");
+let canvas = document.getElementById("canvas");
+let previewArea = document.getElementById("previewArea");
+let capturedImages = [];
+
+function openCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+    })
+    .catch(err => {
+      alert("Camera access denied: " + err);
+    });
+}
+
+function capturePhoto() {
+  canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+  let dataUrl = canvas.toDataURL("image/jpeg");
+  capturedImages.push(dataUrl);
+
+  // Show preview
+  let img = document.createElement("img");
+  img.src = dataUrl;
+  img.className = "m-1";
+  img.width = 80;
+  previewArea.appendChild(img);
+
+  // Save to hidden field
+  document.getElementById("capturedImages").value = JSON.stringify(capturedImages);
+}
+</script>
+{% endblock %}

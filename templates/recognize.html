@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Recognize Person</h2>
+
+<input type="file" id="upload" accept="image/*">
+<button id="btnCheck">Check</button>
+<div id="result"></div>
+
+<script>
+document.getElementById("btnCheck").addEventListener("click", function(){
+    let fileInput = document.getElementById("upload");
+    if (!fileInput.files || !fileInput.files[0]) {
+        alert("Please select an image file first.");
+        return;
+    }
+    let form = new FormData();
+    form.append("image", fileInput.files[0]);
+
+    fetch("/recognize", { method: "POST", body: form })
+      .then(res => res.json())
+      .then(data => {
+        const r = document.getElementById("result");
+        if (data.match) {
+           // show person details and image (prefer image_url if available)
+           let imgTag = "";
+           if (data.image_url) {
+               imgTag = `<img src="${data.image_url}" width="120">`;
+           } else if (data.image_b64) {
+               imgTag = `<img src="data:image/jpeg;base64,${data.image_b64}" width="120">`;
+           }
+           r.innerHTML = `<div style="border:1px solid #ccc;padding:12px;">
+             <h4>Match found (distance=${data.distance.toFixed(3)})</h4>
+             ${imgTag}
+             <p><b>Name:</b> ${data.person.name}</p>
+             <p><b>Roll:</b> ${data.person.rollno}</p>
+             <p><b>Mobile:</b> ${data.person.mobile}</p>
+             <p><b>Branch:</b> ${data.person.branch} &nbsp; <b>Section:</b> ${data.person.section}</p>
+           </div>`;
+        } else {
+           r.innerHTML = `<p style="color:red;">No match found. Best distance: ${data.best_distance || data.best_distance === 0 ? data.best_distance : 'N/A'}</p>`;
+        }
+      }).catch(err => {
+        console.error(err);
+        alert("Server error while recognizing. Check server logs.");
+      });
+});
+</script>
+{% endblock %}
