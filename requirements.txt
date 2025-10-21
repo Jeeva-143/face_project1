@@ -1,18 +1,4 @@
-blinker @ file:///home/conda/feedstock_root/build_artifacts/blinker_1731096409132/work
-click @ file:///D:/bld/click_1758270401364/work
-colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1733218098505/work
-dlib @ file:///D:/bld/dlib_1697537197896/work
-face-recognition @ file:///home/conda/feedstock_root/build_artifacts/face_recognition_1619808233029/work
-face-recognition-models @ file:///home/conda/feedstock_root/build_artifacts/face_recognition_models_1595707436534/work
-Flask @ file:///home/conda/feedstock_root/build_artifacts/flask_1755674618058/work
-flask-cors @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_flask-cors_1749615415/work
-importlib_metadata @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_importlib-metadata_1747934053/work
-itsdangerous @ file:///home/conda/feedstock_root/build_artifacts/itsdangerous_1733308265247/work
-Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1741263328855/work
-MarkupSafe @ file:///D:/bld/markupsafe_1759055175616/work
-numpy @ file:///D:/bld/numpy_1707225570061/work/dist/numpy-1.26.4-cp310-cp310-win_amd64.whl#sha256=6761da75b1528684e6bf4dabdbdded9d1eb4d0e9b299482c7ce152cfb3155106
-opencv-python==4.11.0
-opencv-python-headless==4.11.0
-pillow @ file:///D:/bld/bld/rattler-build_pillow_1758208682/work
-Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1733160440960/work
-zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1749421620841/work
+Flask
+gunicorn
+requests
+Pillow
